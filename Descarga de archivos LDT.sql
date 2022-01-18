@@ -1,5 +1,5 @@
 DECLARE
-    val_nom_corto_concurrentes NVARCHAR2(5000) := 'XXIT_GL_PRUEBAJP';
+    val_nom_corto_concurrentes NVARCHAR2(5000) := '';
     val_user_pass_bd           NVARCHAR2(5000) := 'apps/apps';
     val_tipo_lenguaje          NUMBER := 2;
     
