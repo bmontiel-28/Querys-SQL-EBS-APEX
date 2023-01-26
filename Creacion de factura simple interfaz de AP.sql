@@ -114,12 +114,13 @@ BEGIN
 
       /*******************************/
       BEGIN
+         /* Establece el contexto de la aplicacion */
          MO_GLOBAL.INIT ('SQLAP');
          FND_GLOBAL.APPS_INITIALIZE (USER_ID        => 1318,
                                      RESP_ID        => 50554,
                                      RESP_APPL_ID   => 200);
 
-         /*Concurrent: Payables Open Interface Import*/
+         /*Realiza la ejecicion del Concurrente: Payables Open Interface Import*/
          V_REQUEST_ID :=
             FND_REQUEST.SUBMIT_REQUEST (APPLICATION   => 'SQLAP',
                                         PROGRAM       => 'APXIIMPT',
@@ -138,6 +139,7 @@ BEGIN
          COMMIT;
 
          IF V_REQUEST_ID > 0 THEN
+            /* Realiza una espera hasta que finalice la ejecucion del concurente */
             V_BOOLEAN :=
                FND_CONCURRENT.WAIT_FOR_REQUEST (V_REQUEST_ID,
                                                 5,
