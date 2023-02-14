@@ -1,37 +1,38 @@
 DECLARE
-    l_prog_short_name VARCHAR2(240);
-    l_exec_short_name VARCHAR2(240);
-    l_appl_full_name  VARCHAR2(240) := 'General Ledger';
-    l_appl_short_name VARCHAR2(240);
-    l_del_prog_flag   VARCHAR2(1) := 'Y';
-    l_del_exec_flag   VARCHAR2(1) := 'Y';
+    L_PROG_SHORT_NAME VARCHAR2(240);
+    L_EXEC_SHORT_NAME VARCHAR2(240);
+    L_APPL_FULL_NAME  VARCHAR2(240) := 'Application Object Library';
+    L_APPL_SHORT_NAME VARCHAR2(240);
+    L_DEL_PROG_FLAG   VARCHAR2(1) := 'Y';
+    L_DEL_EXEC_FLAG   VARCHAR2(1) := 'Y';
 BEGIN
-    l_prog_short_name := 'XXGLORAIMPORT';
-    l_exec_short_name := 'XXGLORAIMPORT';
-    l_appl_short_name := 'SQLGL';
+    L_PROG_SHORT_NAME := 'HCS_CARMONA_HIWORLD';
+    L_EXEC_SHORT_NAME := 'HCS_CARMONA_HIWORLD';
+    L_APPL_SHORT_NAME := 'FND';
+    
     IF
-        fnd_program.program_exists(l_prog_short_name, l_appl_short_name)
-        AND fnd_program.executable_exists(l_exec_short_name, l_appl_short_name)
+        L_DEL_PROG_FLAG = 'Y'
+        AND FND_PROGRAM.PROGRAM_EXISTS(L_PROG_SHORT_NAME,L_APPL_SHORT_NAME)
     THEN
-        IF l_del_prog_flag = 'Y' THEN
-            fnd_program.delete_program(l_prog_short_name, l_appl_full_name);
-                       -- Borrar el Programa Concurrente
-            dbms_output.put_line('Borrando el Programa Concurrente ' || l_prog_short_name);
-        END IF;
-
-        IF l_del_exec_flag = 'Y' THEN
-            fnd_program.delete_executable(l_exec_short_name, l_appl_full_name);
-            dbms_output.put_line('Borrando el Executable ' || l_exec_short_name);
-        END IF;
-
+        FND_PROGRAM.DELETE_PROGRAM(L_PROG_SHORT_NAME,L_APPL_FULL_NAME);
         COMMIT;
-        dbms_output.put_line('Programa concurrente ' || l_prog_short_name || ' eliminado exitosamente');
-        dbms_output.put_line('Executable ' || l_exec_short_name || ' eliminado exitosamente');
+        DBMS_OUTPUT.PUT_LINE('BORRADO EL PROGRAMA CONCURRENTE: ' || L_PROG_SHORT_NAME);
     ELSE
-        dbms_output.put_line('El programa ' || l_prog_short_name || ' o Ejecutable ' || l_exec_short_name || ' no existen');
+        DBMS_OUTPUT.PUT_LINE('NO EXISTE PROGRAMA: ' || L_PROG_SHORT_NAME);
+    END IF;
+
+    IF
+        L_DEL_EXEC_FLAG = 'Y'
+        AND FND_PROGRAM.EXECUTABLE_EXISTS(L_EXEC_SHORT_NAME,L_APPL_SHORT_NAME)
+    THEN
+        FND_PROGRAM.DELETE_EXECUTABLE(L_EXEC_SHORT_NAME,L_APPL_FULL_NAME);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('BORRADO EL EXECUTABLE: ' || L_EXEC_SHORT_NAME);
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('EXISTE EXECUTABLE: ' || L_EXEC_SHORT_NAME);
     END IF;
 
 EXCEPTION
     WHEN OTHERS THEN
-        dbms_output.put_line('Error al eliminar: ' || sqlerrm);
+        DBMS_OUTPUT.PUT_LINE('ERROR AL ELIMINAR: ' || SQLERRM);
 END;
