@@ -18,9 +18,9 @@ BEGIN
    
    --Realizacion de la peticion este caso un POST
    L_RESPONSE :=
-      APEX_WEB_SERVICE.MAKE_REST_REQUEST (p_url           => '<URL_APEX.com>/ords/<SCHEMA_ALIAS>/oauth/token'
-                                         ,p_http_method   => 'POST'
-                                         ,p_body          => L_BODY);
+      APEX_WEB_SERVICE.MAKE_REST_REQUEST (P_URL           => '<URL_APEX.com>/ords/<SCHEMA_ALIAS>/oauth/token'
+                                         ,P_HTTP_METHOD   => 'POST'
+                                         ,P_BODY          => L_BODY);
    --Mostrar la respuesta obtenida
    DBMS_OUTPUT.PUT_LINE (L_RESPONSE);
    
