@@ -4,6 +4,9 @@ DECLARE
    
    --Se crea el cuerpo de la solicitud, este puede ser asi o json dependiendo del Content-Type
    L_BODY       VARCHAR2 (4000) := 'grant_type=client_credentials';
+   
+   --Creamos una variable para pasar el JSON de la respuesta
+   l_object   json_object_t;
 BEGIN
    --Se usa el CLIENT_ID y CLIENT_SECRET de esta manera CLIENT_ID:CLIENT_SECRET
    APEX_WEB_SERVICE.G_REQUEST_HEADERS (1).NAME  := 'Authorization';
@@ -20,4 +23,11 @@ BEGIN
                                          ,p_body          => L_BODY);
    -- Mostrar la respuesta obtenida
    DBMS_OUTPUT.PUT_LINE (L_RESPONSE);
+   
+   --Pasamos la respuesta a la variable para darle estructura JSON
+   l_object := json_object_t.parse (L_RESPONSE);
+   
+   -- Mostrar el nodo del token
+   DBMS_OUTPUT.PUT_LINE (l_object.get_string ('access_token'));
+   
 END;
