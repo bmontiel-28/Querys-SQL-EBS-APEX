@@ -21,13 +21,13 @@ BEGIN
       APEX_WEB_SERVICE.MAKE_REST_REQUEST (p_url           => '<URL_APEX.com>/ords/<SCHEMA_ALIAS>/oauth/token'
                                          ,p_http_method   => 'POST'
                                          ,p_body          => L_BODY);
-   -- Mostrar la respuesta obtenida
+   --Mostrar la respuesta obtenida
    DBMS_OUTPUT.PUT_LINE (L_RESPONSE);
    
    --Pasamos la respuesta a la variable para darle estructura JSON
    l_object := json_object_t.parse (L_RESPONSE);
    
-   -- Mostrar el nodo del token
+   --Mostrar el nodo del token
    DBMS_OUTPUT.PUT_LINE (l_object.get_string ('access_token'));
    
 END;
