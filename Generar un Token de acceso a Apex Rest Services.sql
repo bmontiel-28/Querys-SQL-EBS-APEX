@@ -15,7 +15,7 @@ BEGIN
    
    --Realizacion de la peticion este caso un POST
    L_RESPONSE :=
-      APEX_WEB_SERVICE.MAKE_REST_REQUEST (p_url           => 'https://g769581ae49c68d-adertdw.adb.us-sanjose-1.oraclecloudapps.com/ords/itg_vls_ords/oauth/token'
+      APEX_WEB_SERVICE.MAKE_REST_REQUEST (p_url           => 'URL_APEX.com/ords/itg_vls_ords/oauth/token'
                                          ,p_http_method   => 'POST'
                                          ,p_body          => L_BODY);
    -- Mostrar la respuesta obtenida
